@@ -19,13 +19,13 @@ export class BlogsController {
 
   @Get('openai')
   async createMessage() {
-    let title;
     let createdBlog;
     try {
       const createCompletionResult = await this.openaiService.createCompletion();
+      console.log(createCompletionResult)
+
       createdBlog = JSON.parse(createCompletionResult);
-      title = createdBlog.title;
-      const generatedImageResult = await this.openaiService.generateImage(title);
+      const generatedImageResult = await this.openaiService.generateImage(createdBlog.title);
       const now = new Date();
       const filename = now.toLocaleString('sv-SE',
         {
@@ -39,10 +39,10 @@ export class BlogsController {
 
       const cloundiaryImageURL = await this.cloudinaryService.uploadImage(generatedImageResult, filename)
       createdBlog.imageUrl = cloundiaryImageURL;
+      console.log(createdBlog)
     } catch (error) {
-      createdBlog = { title: 'Randomness' };
       console.error(error);
-      return error
+      return { "error": createdBlog }
     }
     return this.create(createdBlog);
   }

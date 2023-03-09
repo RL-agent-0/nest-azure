@@ -14,9 +14,9 @@ export class OpenaiService {
     async createCompletion() {
         const completion = await this.openai.createCompletion({
             model: "text-davinci-003",
-            prompt: `Write me a blog about a random topic in a json format with these fields: 
+            prompt: `Write me a blog about a random topic in a json format without linebreaks, with these fields: 
             title, description, content, createdAt and author which is an imaginary author name,
-             where the length of the content is ${this.numberOfWords} words or more`,
+             where the length of the content is ${this.numberOfWords} words or more.`,
             temperature: 0.7,
             max_tokens: 4000,
             top_p: 1,
@@ -31,7 +31,7 @@ export class OpenaiService {
         const randomIndex = Math.floor(Math.random() * imageTypes.length);
         const randomString = imageTypes[randomIndex];
         const response = await this.openai.createImage({
-            prompt: title ? title : "Cool random picture, " + randomString,
+            prompt: (title ? title : "Cool random picture, ") + ", " + randomString + ", pure image, artistic",
             n: 1,
             size: "512x512",
         })
