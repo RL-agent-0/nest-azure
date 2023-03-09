@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Configuration, OpenAIApi } from 'openai';
 @Injectable()
 export class OpenaiService {
-    private numberOfWords = 10;
+    private numberOfWords = 100;
     private openai;
     constructor() {
         const configuration = new Configuration({
@@ -27,8 +27,11 @@ export class OpenaiService {
         return completion?.data.choices?.[0]?.text;
     }
     async generateImage(title: string) {
+        const imageTypes = ['digital art', 'by Leonardo davinci', 'Oil painting ', 'Unreal futuristic'];
+        const randomIndex = Math.floor(Math.random() * imageTypes.length);
+        const randomString = imageTypes[randomIndex];
         const response = await this.openai.createImage({
-            prompt: title ? title : "Cool random picture" + ", artistic, painting, without text",
+            prompt: title ? title : "Cool random picture, " + randomString,
             n: 1,
             size: "512x512",
         })
