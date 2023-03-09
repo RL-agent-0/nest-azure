@@ -8,12 +8,11 @@ import { Blog, BlogDocument } from '../schemas/blog.schema';
 export class BlogsService {
   constructor(@InjectModel(Blog.name) private blogModel: Model<BlogDocument>) { }
 
-  async create(createCatDto: CreateBlogDto): Promise<Blog> {
-    const createdBlog = new this.blogModel(createCatDto);
+  async create(createBlogDto: CreateBlogDto): Promise<Blog> {
+    const createdBlog = new this.blogModel(createBlogDto);
     return createdBlog.save();
   }
   async findAll(): Promise<Blog[]> {
-    console.log(this.blogModel)
     return this.blogModel.find().exec();
   }
 }

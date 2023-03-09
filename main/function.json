@@ -5,10 +5,9 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "route": "blogs",
+      "route": "blogs/openai",
       "methods": [
-        "get",
-        "post"
+        "get"
       ]
     },
     {

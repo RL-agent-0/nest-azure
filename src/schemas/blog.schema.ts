@@ -9,13 +9,17 @@ export class Blog {
     title: string;
 
     @Prop()
-    description: number;
+    description: string;
+
+    @Prop()
+    imageUrl: string;
 
     @Prop()
     content: string;
 
+
     @Prop()
-    createdAt: Date;
+    createdAt: string;
 }
 
 export const BlogSchema = SchemaFactory.createForClass(Blog);
