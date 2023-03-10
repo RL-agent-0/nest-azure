@@ -4,6 +4,28 @@ import { Configuration, OpenAIApi } from 'openai';
 export class OpenaiService {
     private numberOfWords = 100;
     private openai;
+    private topics = [
+        "Programming languages and software development",
+        "Science and technology news",
+        "Artificial intelligence and machine learning",
+        "Cybersecurity and online privacy",
+        "Gaming and eSports",
+        "Virtual and augmented reality",
+        "Internet of Things (IoT)",
+        "Cryptocurrencies and blockchain technology",
+        "Health and fitness technology",
+        "Space exploration and astronomy",
+        "Renewable energy and sustainability",
+        "Social media and digital marketing",
+        "Mobile apps and mobile development",
+        "Cloud computing and serverless technology",
+        "Data science and analytics",
+        "UI/UX design and web development",
+        "E-commerce and online business",
+        "Open source software and communities",
+        "Podcasts and video production techniques"
+    ]
+
     constructor() {
         const configuration = new Configuration({
             apiKey: process.env.OPENAI_API_KEY,
@@ -12,9 +34,11 @@ export class OpenaiService {
     }
 
     async createCompletion() {
+        let randomIndex = Math.floor(Math.random() * this.topics.length);
+        let randomTopic = this.topics[randomIndex];
         const completion = await this.openai.createCompletion({
             model: "text-davinci-003",
-            prompt: `Write me a blog about a random topic in a json format without linebreaks, with these fields: 
+            prompt: `Write me a blog about ${randomTopic} in a json format without linebreaks, with these fields: 
             title, description, content, createdAt and author which is an imaginary author name,
              where the length of the content is ${this.numberOfWords} words or more.`,
             temperature: 0.7,
