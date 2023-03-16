@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Redirect } from '@nestjs/common';
+import { Controller, Get, Post, Body, Redirect, Param } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { OpenaiService } from 'src/utils/openai/openai.service';
@@ -51,4 +51,34 @@ export class BlogsController {
   findAll() {
     return this.blogsService.findAll();
   }
+
+  @Get('find_custom/:fields')
+  async findWithCustomFields(@Param('fields') fields: string) {
+    try {
+      const blogs = await this.blogsService.findWithCustomFields(fields);
+      return blogs
+    }
+    catch (error) {
+      return { error: "Somthing went wrong : " + error };
+    }
+  }
+
+  @Get(':id')
+  async findById(@Param('id') id: string) {
+    try {
+      const blog = await this.blogsService.findById(id);
+      return blog
+    }
+    catch (error) {
+      return { error: 'Unable to find the blog with the provided ID.' };
+    }
+  }
 }
+
+/*    try {
+      const blog = this.blogsService.findById(id);
+      return blog
+    }
+    catch (error) {
+      return { "error": error }
+    }*/

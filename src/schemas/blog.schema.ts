@@ -5,6 +5,7 @@ export type BlogDocument = HydratedDocument<Blog>;
 
 @Schema()
 export class Blog {
+    public static numberOfFields = 6;
     @Prop()
     title: string;
 
