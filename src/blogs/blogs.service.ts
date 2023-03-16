@@ -13,7 +13,7 @@ export class BlogsService {
     return createdBlog.save();
   }
   async findAll(): Promise<Blog[]> {
-    const blogs = await this.blogModel.find({}, { _id: 1, title: 1, description: 1, createdAt: 1 }).exec();
+    const blogs = await this.blogModel.find({}, { _id: 1, title: 1, description: 1, createdAt: 1, imageUrl: 1 }).exec();
     return blogs
   }
   async findById(id: string): Promise<Blog> {
